@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# pytest
+.pytest_cache/
+
+# Test çıktıları (raporlar ve ekran görüntüleri her çalıştırmada yeniden oluşur)
+reports/
+
+# Editör / işletim sistemi
+.vscode/
+.idea/
+.DS_Store

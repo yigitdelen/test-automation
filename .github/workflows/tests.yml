@@ -1,0 +1,41 @@
+name: Testler
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch: # GitHub'da "Run workflow" butonuyla elle çalıştırmak için
+
+jobs:
+  test:
+    name: ${{ matrix.suite }} testleri
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # biri kalsa bile diğeri çalışmaya devam etsin
+      matrix:
+        suite: [api, ui]
+
+    steps:
+      - name: Kodu indir
+        uses: actions/checkout@v5
+
+      - name: Python kur
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Bağımlılıkları yükle
+        run: pip install -r requirements.txt
+
+      # GitHub'ın Ubuntu makinelerinde Chrome hazır kurulu; uygun sürücüyü Selenium Manager kendisi indirir.
+      - name: Testleri çalıştır
+        run: pytest -m ${{ matrix.suite }} --html=reports/${{ matrix.suite }}-report.html
+
+      - name: Raporu yükle
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: ${{ matrix.suite }}-test-raporu
+          path: reports/
+          retention-days: 14

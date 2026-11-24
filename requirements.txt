@@ -1,0 +1,5 @@
+selenium==4.54.0
+pytest==9.2.0
+pytest-html==4.2.0
+requests==2.34.2
+jsonschema==4.26.0

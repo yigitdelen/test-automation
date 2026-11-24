@@ -1,6 +1,6 @@
 # Test Otomasyon Projesi
 
-[![Testler](https://github.com/yigitdelen/test-otomasyon/actions/workflows/tests.yml/badge.svg)](https://github.com/yigitdelen/test-otomasyon/actions/workflows/tests.yml)
+[![Testler](https://github.com/yigitdelen/test-automation/actions/workflows/tests.yml/badge.svg)](https://github.com/yigitdelen/test-automation/actions/workflows/tests.yml)
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![Selenium](https://img.shields.io/badge/selenium-4-43B02A)
 ![pytest](https://img.shields.io/badge/pytest-9-0A9EDC)
@@ -8,7 +8,7 @@
 Python ile yazılmış web arayüzü (UI) ve API test otomasyonu projesi.
 **117 test** · Chrome + Firefox · paralel çalışma · Allure raporu · her push'ta ve her gece otomatik çalışma.
 
-📊 **[Canlı test raporu (Allure)](https://yigitdelen.github.io/test-otomasyon/)**: her push'ta ve her gece
+📊 **[Canlı test raporu (Allure)](https://yigitdelen.github.io/test-automation/)**: her push'ta ve her gece
 otomatik güncellenir. Testleri, bulunan hataları, ekran görüntülerini ve API isteklerini kurulum yapmadan
 inceleyebilirsin.
 
@@ -199,4 +199,4 @@ ui (firefox) ─┘
 - **Raporlar:** her çalıştırmanın altında HTML raporlar, ekran görüntüleri ve birleşik Allure
   raporu indirilebilir dosya (artifact) olarak bulunur.
 - **Canlı rapor:** `main` dalındaki her çalıştırmadan sonra birleşik Allure raporu GitHub Pages'te
-  yayınlanır: https://yigitdelen.github.io/test-otomasyon/
+  yayınlanır: https://yigitdelen.github.io/test-automation/

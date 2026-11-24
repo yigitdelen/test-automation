@@ -8,6 +8,10 @@
 Python ile yazılmış web arayüzü (UI) ve API test otomasyonu projesi.
 **117 test** · Chrome + Firefox · paralel çalışma · Allure raporu · her push'ta ve her gece otomatik çalışma.
 
+📊 **[Canlı test raporu (Allure)](https://yigitdelen.github.io/test-otomasyon/)**: her push'ta ve her gece
+otomatik güncellenir. Testleri, bulunan hataları, ekran görüntülerini ve API isteklerini kurulum yapmadan
+inceleyebilirsin.
+
 | Katman | Hedef | Araçlar |
 |---|---|---|
 | Web UI | [saucedemo.com](https://www.saucedemo.com) (demo e-ticaret sitesi) | Selenium 4, Page Object Model |
@@ -194,6 +198,5 @@ ui (firefox) ─┘
   Ağ kaynaklı geçici hatalara karşı kalan testler otomatik olarak yeniden denenir.
 - **Raporlar:** her çalıştırmanın altında HTML raporlar, ekran görüntüleri ve birleşik Allure
   raporu indirilebilir dosya (artifact) olarak bulunur.
-- **Allure raporunu web'de yayınlamak için:** deponun **Settings → Pages → Source** ayarını
-  **GitHub Actions** yap. Sonraki çalıştırmadan itibaren rapor
-  `https://yigitdelen.github.io/test-otomasyon/` adresinde yayınlanır.
+- **Canlı rapor:** `main` dalındaki her çalıştırmadan sonra birleşik Allure raporu GitHub Pages'te
+  yayınlanır: https://yigitdelen.github.io/test-otomasyon/

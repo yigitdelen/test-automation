@@ -187,7 +187,7 @@ ruff format .         # otomatik biçimlendirme
 
 ```
 lint ──┐
-api ───┼──► Allure raporu ──► GitHub Pages
+api ───┼──► Allure raporu ──► Yayınla (GitHub Pages)
 ui (chrome) ──┤
 ui (firefox) ─┘
 ```

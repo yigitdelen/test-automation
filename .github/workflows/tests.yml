@@ -104,15 +104,11 @@ jobs:
   report:
     name: Allure raporu
     needs: [api, ui]
-    # Testler kalsa bile rapor oluşturulsun; PR'larda yayınlama yapılmasın
-    if: always() && github.event_name != 'pull_request'
+    # Testler kalsa bile rapor oluşturulsun
+    if: always()
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+    outputs:
+      pages_ready: ${{ steps.pages.outcome == 'success' }}
     steps:
       - name: Tüm Allure sonuçlarını indir ve birleştir
         uses: actions/download-artifact@v8
@@ -134,10 +130,11 @@ jobs:
           path: allure-report
           retention-days: 14
 
-      # GitHub Pages açık değilse bu adımlar kalır ama testlerin sonucunu etkilemez.
+      # GitHub Pages açık değilse bu adım kalır ama testlerin sonucunu etkilemez.
       # Açmak için: Settings -> Pages -> Source: "GitHub Actions"
       - name: GitHub Pages'i hazırla
         id: pages
+        if: github.event_name != 'pull_request'
         continue-on-error: true
         uses: actions/configure-pages@v6
       - name: Raporu Pages için paketle
@@ -145,7 +142,20 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: allure-report
-      - name: Raporu yayınla
+
+  # Yayınlama ayrı bir işte: GitHub'ın önerdiği yapı. Rapor paketlendikten sonra başlar.
+  deploy:
+    name: Raporu yayınla (GitHub Pages)
+    needs: report
+    if: always() && needs.report.outputs.pages_ready == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Yayınla
         id: deploy
-        if: steps.pages.outcome == 'success'
         uses: actions/deploy-pages@v5

@@ -2,6 +2,10 @@
 
 Elemente tıklama, yazı yazma, bekleme gibi işlemler burada bir kez yazılır;
 sayfa sınıfları sadece kendi elementlerini (locator) ve işlemlerini tanımlar.
+
+Not: `time.sleep()` hiç kullanılmıyor. Her işlem, elementin hazır olmasını
+akıllıca bekleyen WebDriverWait ile yapılıyor (explicit wait). Bu, testleri
+hem hızlı hem de kararlı (flaky olmayan) yapar.
 """
 
 from selenium.common.exceptions import TimeoutException
@@ -49,9 +53,16 @@ class BasePage:
     def text_of(self, locator: Locator) -> str:
         return self.find(locator).text
 
+    def value_of(self, locator: Locator) -> str:
+        """Form alanının içindeki değeri döndürür."""
+        return self.find(locator).get_attribute("value")
+
     def is_visible(self, locator: Locator, timeout: float = 2) -> bool:
         try:
             WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
             return True
         except TimeoutException:
             return False
+
+    def wait_for_url(self, path: str) -> None:
+        self.wait.until(EC.url_contains(path))

@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Bilinen hatalar (xfail)",
+    "description": "Test edilen sistemde önceden tespit edilip belgelenmiş hatalar",
+    "matchedStatuses": ["skipped"],
+    "messageRegex": ".*HATA:.*"
+  },
+  {
+    "name": "Ürün hatası (assert kaldı)",
+    "description": "Sistem beklenen davranışı göstermedi; yeni bir hata olabilir",
+    "matchedStatuses": ["failed"]
+  },
+  {
+    "name": "Element bulunamadı / zaman aşımı",
+    "description": "Sayfa yapısı değişmiş ya da sayfa geç yüklenmiş olabilir; locator'ları kontrol et",
+    "matchedStatuses": ["broken"],
+    "traceRegex": ".*(TimeoutException|NoSuchElementException|StaleElementReferenceException).*"
+  },
+  {
+    "name": "Ağ / bağlantı sorunu",
+    "description": "Test edilen sisteme ulaşılamadı",
+    "matchedStatuses": ["broken"],
+    "traceRegex": ".*(ConnectionError|ReadTimeout|ConnectTimeout).*"
+  },
+  {
+    "name": "Test kodu hatası",
+    "description": "Testin kendisinde beklenmeyen bir hata oluştu",
+    "matchedStatuses": ["broken"]
+  }
+]

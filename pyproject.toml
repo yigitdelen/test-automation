@@ -1,0 +1,43 @@
+[project]
+name = "test-otomasyon"
+version = "1.0.0"
+description = "Python ile web arayüzü (Selenium) ve API (requests) test otomasyonu"
+requires-python = ">=3.11"
+
+# --- pytest -------------------------------------------------------------------
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = [
+    "-v",
+    "-ra",                      # sonunda atlanan/kalan/xfail testlerin özetini göster
+    "--strict-markers",         # tanımlanmamış etiket kullanılırsa hata ver (yazım hatalarını yakalar)
+    "--html=reports/report.html",
+    "--self-contained-html",
+    "--alluredir=reports/allure-results",
+]
+# Bilinen hata (xfail) olarak işaretlenen test beklenmedik şekilde geçerse kırmızı yansın:
+# hata düzeltilmiş demektir, testin güncellenmesi gerekir.
+xfail_strict = true
+markers = [
+    "ui: Selenium ile web arayüzü testleri (saucedemo.com)",
+    "api: requests ile API testleri (restful-booker)",
+    "smoke: kritik akışları kontrol eden hızlı testler",
+    "known_bug: test edilen sistemdeki bilinen bir hatayı belgeleyen testler",
+]
+
+# --- ruff (kod stili ve hata denetimi) ----------------------------------------
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E", "W",   # pycodestyle
+    "F",        # pyflakes: kullanılmayan import, tanımsız değişken vb.
+    "I",        # import sıralaması
+    "B",        # bugbear: sık yapılan hatalar
+    "UP",       # modern Python yazımı
+    "SIM",      # sadeleştirilebilecek kodlar
+    "PT",       # pytest'e özgü iyi pratikler
+]

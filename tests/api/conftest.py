@@ -18,16 +18,27 @@ def token(client) -> str:
 
 
 @pytest.fixture
-def created_booking(client, token) -> dict:
-    """Test için yeni bir rezervasyon oluşturur, test bitince siler (temizlik).
+def cleanup(client, token):
+    """Test sırasında oluşturulan rezervasyonları test bitince siler.
+
+    Kullanım: cleanup.append(booking_id)
+    Test kalsa bile silme çalışır; paylaşılan demo API'de çöp kayıt bırakmayız.
+    """
+    booking_ids: list[int] = []
+    yield booking_ids
+    for booking_id in booking_ids:
+        client.delete_booking(booking_id, token=token)
+
+
+@pytest.fixture
+def created_booking(client, cleanup) -> dict:
+    """Test için hazır bir rezervasyon oluşturur.
 
     Döndürdüğü sözlük: {"id": ..., "data": <gönderilen veri>}
     """
     payload = new_booking()
     response = client.create_booking(payload)
     assert response.status_code == 200, f"Rezervasyon oluşturulamadı: {response.text}"
-    booking = {"id": response.json()["bookingid"], "data": payload}
-
-    yield booking
-
-    client.delete_booking(booking["id"], token=token)
+    booking_id = response.json()["bookingid"]
+    cleanup.append(booking_id)
+    return {"id": booking_id, "data": payload}

@@ -2,6 +2,7 @@
 
 Her değer bir ortam değişkeniyle (environment variable) değiştirilebilir.
 Örnek: HEADLESS=false pytest  -> tarayıcıyı görünür modda açar.
+Tarayıcı ve görünürlük ayrıca komut satırından da verilebilir: pytest --browser firefox --headed
 """
 
 import os
@@ -22,18 +23,21 @@ class Settings:
     api_base_url: str = os.getenv("API_BASE_URL", "https://restful-booker.herokuapp.com")
 
     # Tarayıcı ayarları
+    browser: str = os.getenv("BROWSER", "chrome")
     headless: bool = _env_bool("HEADLESS", True)
-    window_size: str = os.getenv("WINDOW_SIZE", "1920,1080")
+    window_width: int = int(os.getenv("WINDOW_WIDTH", "1920"))
+    window_height: int = int(os.getenv("WINDOW_HEIGHT", "1080"))
     explicit_wait: int = int(os.getenv("EXPLICIT_WAIT", "10"))
 
     # Boş bırakılırsa Selenium Manager tarayıcıyı ve sürücüyü kendisi bulur.
-    chrome_binary: str | None = os.getenv("CHROME_BINARY") or None
-    chromedriver_path: str | None = os.getenv("CHROMEDRIVER_PATH") or None
+    browser_binary: str | None = os.getenv("BROWSER_BINARY") or os.getenv("CHROME_BINARY") or None
+    driver_path: str | None = os.getenv("DRIVER_PATH") or os.getenv("CHROMEDRIVER_PATH") or None
 
     # API ayarları (restful-booker'ın herkese açık demo kullanıcı bilgileri)
     api_username: str = os.getenv("API_USERNAME", "admin")
     api_password: str = os.getenv("API_PASSWORD", "password123")
     api_timeout: int = int(os.getenv("API_TIMEOUT", "15"))
+    api_max_response_time: float = float(os.getenv("API_MAX_RESPONSE_TIME", "5"))
 
 
 settings = Settings()
